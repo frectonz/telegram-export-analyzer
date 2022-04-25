@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
 import { StoreProvider } from "./store";
+import favicon from "./favicon.svg";
 
 function App() {
   return (
@@ -42,7 +43,7 @@ function Header() {
     <div className="navbar bg-base-100">
       <div className="navbar-start">
         <a className="btn btn-ghost normal-case text-xl">
-          Telegram Export Data Analyzer
+          <img src={favicon} className="w-10" />
         </a>
       </div>
       <div className="navbar-end">
