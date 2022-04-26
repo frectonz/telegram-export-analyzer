@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { ChangeEvent, useEffect, useState } from "react";
 
 import { readFile } from "../helpers/helpers";
-import { useStore, useDispatch, shouldNavigateToAnalyticsPage } from "../store";
+import { useStore, useDispatch } from "../store";
 
 function Home() {
   const store = useStore();
