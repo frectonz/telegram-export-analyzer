@@ -7,7 +7,6 @@ import { useStore, useDispatch, shouldNavigateToAnalyticsPage } from "../store";
 
 function Home() {
   const store = useStore();
-  const navigate = useNavigate();
   const [errorMessage, setErrorMessage] = useState<Option<string>>(new None());
 
   useEffect(() => {
@@ -31,10 +30,6 @@ function Home() {
         });
       })
     );
-
-    if (shouldNavigateToAnalyticsPage(store)) {
-      navigate("/analytics");
-    }
   }, [store]);
 
   return (
@@ -90,11 +85,18 @@ function Error({ error }: { error: string }) {
 
 function UploadForm() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
 
   const handleFileInput = async (e: ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
+    setLoading(true);
+
     const file = e.target.files?.item(0);
+
     if (!file) {
+      setLoading(false);
+
       return dispatch({
         type: "SET_STATE",
         payload: new Some(
@@ -104,15 +106,18 @@ function UploadForm() {
         ),
       });
     }
+
     const content = await readFile(file);
     try {
       const data = JSON.parse(content);
-      return dispatch({
+      dispatch({
         type: "SET_STATE",
         payload: new Some(new Ok(data)),
       });
+      navigate("/analytics");
     } catch {
-      return dispatch({
+      setLoading(false);
+      dispatch({
         type: "SET_STATE",
         payload: new Some(
           new Err({
@@ -129,15 +134,17 @@ function UploadForm() {
       <label htmlFor="cats" className="btn btn-primary">
         <svg
           fill="#fff"
+          width="18"
           height="18"
           viewBox="0 0 24 24"
-          width="18"
           xmlns="http://www.w3.org/2000/svg"
         >
           <path d="M0 0h24v24H0z" fill="none" />
           <path d="M9 16h6v-6h4l-7-7-7 7h4zm-4 2h14v2H5z" />
         </svg>
-        <span className="ml-2">Upload Export Data</span>
+        <span className="ml-2">
+          {loading ? "Loading.." : "Upload Export Data"}
+        </span>
       </label>
       <input
         id="cats"

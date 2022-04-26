@@ -42,7 +42,7 @@ function Header() {
   return (
     <header className="navbar bg-base-100">
       <div className="navbar-start">
-        <a className="btn btn-ghost normal-case text-xl">
+        <a href="/" className="btn btn-ghost normal-case text-xl">
           <img
             title="Telegram Export Analyzer"
             src={favicon}
