@@ -11,6 +11,7 @@
     "optionem": "^0.2.5",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
+    "react-error-boundary": "^3.1.4",
     "react-router-dom": "6"
   },
   "devDependencies": {

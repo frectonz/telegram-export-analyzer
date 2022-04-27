@@ -1,14 +1,17 @@
 import { useEffect, useState } from "react";
-import { Outlet } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
 import { StoreProvider } from "./store";
 import favicon from "./favicon.svg";
+import { ErrorBoundary, FallbackProps } from "react-error-boundary";
 
 function App() {
   return (
     <>
       <Header />
       <StoreProvider>
-        <Outlet />
+        <ErrorBoundary FallbackComponent={ErrorFallback}>
+          <Outlet />
+        </ErrorBoundary>
       </StoreProvider>
       <Footer />
     </>
@@ -125,6 +128,31 @@ function Footer() {
         </a>
       </div>
     </footer>
+  );
+}
+
+function ErrorFallback({ error, resetErrorBoundary }: FallbackProps) {
+  return (
+    <div className="hero min-h-screen bg-base-200">
+      <div className="hero-content text-center">
+        <div className="max-w-md">
+          <h1 className="text-5xl font-bold">Oops, something went wrong!</h1>
+          <p className="py-6">
+            The file you provided might be corrupted or not supported. This
+            website expect a json file exported by Telegram.
+          </p>
+          <Link
+            to="/"
+            className="btn btn-primary"
+            onClick={() => {
+              resetErrorBoundary();
+            }}
+          >
+            Try Again
+          </Link>
+        </div>
+      </div>
+    </div>
   );
 }
 

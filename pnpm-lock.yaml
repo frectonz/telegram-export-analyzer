@@ -10,6 +10,7 @@ specifiers:
   postcss: ^8.4.12
   react: ^18.0.0
   react-dom: ^18.0.0
+  react-error-boundary: ^3.1.4
   react-router-dom: '6'
   tailwindcss: ^3.0.24
   typescript: ^4.6.3
@@ -19,6 +20,7 @@ dependencies:
   optionem: 0.2.5
   react: 18.0.0
   react-dom: 18.0.0_react@18.0.0
+  react-error-boundary: 3.1.4_react@18.0.0
   react-router-dom: 6.3.0_react-dom@18.0.0+react@18.0.0
 
 devDependencies:
@@ -1115,6 +1117,16 @@ packages:
       loose-envify: 1.4.0
       react: 18.0.0
       scheduler: 0.21.0
+    dev: false
+
+  /react-error-boundary/3.1.4_react@18.0.0:
+    resolution: {integrity: sha512-uM9uPzZJTF6wRQORmSrvOIgt4lJ9MC1sNgEOj2XGsDTRE4kmpWxg7ENK9EWNKJRMAOY9z0MuF4yIfl6gp4sotA==}
+    engines: {node: '>=10', npm: '>=6'}
+    peerDependencies:
+      react: '>=16.13.1'
+    dependencies:
+      '@babel/runtime': 7.17.9
+      react: 18.0.0
     dev: false
 
   /react-refresh/0.12.0:
