@@ -35,16 +35,14 @@ function Home() {
   return (
     <>
       <div className="hero min-h-screen bg-base-200">
-        <div className="hero-content flex-col lg:flex-row-reverse gap-10">
-          <div className="text-center lg:text-left">
+        <div className="hero-content text-center">
+          <div className="max-w-2xl">
             <h1 className="text-5xl font-bold">What does this website do?</h1>
             <p className="py-6">
               This website takes the data from the Telegram export file and
               analyzes it. It shows information like a rank of people in a
               Telegram group sorted by how many messages they have sent.
             </p>
-          </div>
-          <div className="card flex-shrink-0 w-full max-w-sm bg-base-300">
             <div className="card-body">
               {errorMessage
                 .map((error) => {
