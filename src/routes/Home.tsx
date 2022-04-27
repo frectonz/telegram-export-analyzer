@@ -41,7 +41,7 @@ function Home() {
             <p className="py-6">
               This website takes the data from the Telegram export file and
               analyzes it. It shows information like a rank of people in a
-              Telegram group sorted by how many hats they have sent.
+              Telegram group sorted by how many messages they have sent.
             </p>
           </div>
           <div className="card flex-shrink-0 w-full max-w-sm bg-base-300">
