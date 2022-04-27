@@ -143,7 +143,7 @@ function UploadForm() {
           <path d="M9 16h6v-6h4l-7-7-7 7h4zm-4 2h14v2H5z" />
         </svg>
         <span className="ml-2">
-          {loading ? "Loading.." : "Upload Export Data"}
+          {loading ? "Loading.." : "Select Export Data"}
         </span>
       </label>
       <input
