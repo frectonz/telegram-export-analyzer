@@ -48,7 +48,7 @@ function Home() {
             <div className="card-body">
               {errorMessage
                 .map((error) => {
-                  return <Error error={error} />;
+                  return <ErrorMessage error={error} />;
                 })
                 .unwrapOr(<></>)}
               <UploadForm />
@@ -60,7 +60,7 @@ function Home() {
   );
 }
 
-function Error({ error }: { error: string }) {
+function ErrorMessage({ error }: { error: string }) {
   return (
     <div className="alert font-bold text-error ">
       <div>

@@ -54,6 +54,7 @@ function Header() {
         <button
           className="btn btn-square btn-ghost"
           onClick={() => setDarkMode(!darkMode)}
+          title={darkMode ? "Light mode" : "Dark mode"}
         >
           <svg
             fill="none"
