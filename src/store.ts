@@ -212,7 +212,7 @@ export function getGroupNameHistory({
           acc.push({
             actor: message.actor,
             date: message.date,
-            title: message.actor,
+            title: message.title,
           });
         }
       }
