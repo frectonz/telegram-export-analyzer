@@ -11,6 +11,8 @@ export interface Content {
     | InviteMembers
     | RemoveMembers
     | InviteMembersToGroupCalls
+    | EditGroupTitle
+    | MigrateFromGroup
   )[];
 }
 
@@ -44,7 +46,6 @@ interface ServiceMessage extends Message {
 //   | "pin_message"
 //   | "invite_to_group_call"
 //   | "migrate_from_group"
-//   | "edit_group_photo"
 //   | "score_in_game"
 
 interface WithMembers extends ServiceMessage {
@@ -66,6 +67,16 @@ interface RemoveMembers extends WithMembers {
 
 interface InviteMembersToGroupCalls extends WithMembers {
   action: "invite_to_group_call";
+}
+
+interface EditGroupTitle extends ServiceMessage {
+  action: "edit_group_title";
+  title: string;
+}
+
+interface MigrateFromGroup extends ServiceMessage {
+  action: "migrate_from_group";
+  title: string;
 }
 
 type Error =
@@ -135,7 +146,6 @@ export function getForwardedMessages({ messages }: Content) {
     if (message.type === "message") {
       if (message.forwarded_from) {
         acc.push(message);
-        return acc;
       }
     }
     return acc;
@@ -178,4 +188,38 @@ export function shouldNavigateToHomePage(state: State) {
       });
     },
   });
+}
+
+export function getGroupNameHistory({
+  messages,
+}: Content): { actor: string; date: string; title: string }[] {
+  const groupNameHistory = messages.reduce(
+    (acc: { actor: string; date: string; title: string }[], message) => {
+      if (message.type === "service") {
+        if (message.action === "create_group") {
+          acc.push({
+            actor: message.actor || message.actor_id,
+            date: message.date,
+            title: message.title,
+          });
+        } else if (message.action === "edit_group_title") {
+          acc.push({
+            actor: message.actor || message.actor_id,
+            date: message.date,
+            title: message.title,
+          });
+        } else if (message.action === "migrate_from_group") {
+          acc.push({
+            actor: message.actor,
+            date: message.date,
+            title: message.actor,
+          });
+        }
+      }
+      return acc;
+    },
+    []
+  );
+
+  return groupNameHistory;
 }

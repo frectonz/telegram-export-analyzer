@@ -4,12 +4,14 @@ import {
   Content,
   useStore,
   countMessages,
+  getGroupNameHistory,
   getForwardedMessages,
   getMembersWithMessages,
   shouldNavigateToHomePage,
 } from "../store";
 import StatBoxes from "./Analytics/StatsBox";
 import MembersList from "./Analytics/MembersList";
+import GroupNameHistory from "./Analytics/GroupNameHistory";
 
 export default function Analytics() {
   const store = useStore();
@@ -42,6 +44,7 @@ function AnalyticsDisplay({ content }: { content: Content }) {
   const totalMessages = countMessages(content);
   const members = getMembersWithMessages(content);
   const forwardedMessages = getForwardedMessages(content);
+  const groupNameHistory = getGroupNameHistory(content);
 
   return (
     <main className="container mx-auto p-2">
@@ -69,6 +72,7 @@ function AnalyticsDisplay({ content }: { content: Content }) {
                   members={members.splice(0, 10)}
                   totalMessages={totalMessages}
                 />
+                <GroupNameHistory history={groupNameHistory} />
               </>
             }
           />
