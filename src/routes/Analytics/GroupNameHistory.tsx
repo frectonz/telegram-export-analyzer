@@ -18,7 +18,10 @@ export default function GroupNameHistory({
             <li key={i} className="step step-primary">
               <p>
                 <strong>{history.actor}</strong> changed it to{" "}
-                <strong className="text-secondary">{history.title}</strong>
+                <strong className="text-secondary">{history.title}</strong> on{" "}
+                <strong className="text-accent">
+                  {new Date(history.date).toDateString()}
+                </strong>
               </p>
             </li>
           ))}
