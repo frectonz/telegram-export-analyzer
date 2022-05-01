@@ -69,7 +69,7 @@ function AnalyticsDisplay({ content }: { content: Content }) {
                 />
                 <MembersList
                   title="Top 10 Chattiest Members"
-                  members={members.splice(0, 10)}
+                  members={members.slice(0, 10)}
                   totalMessages={totalMessages}
                 />
                 <GroupNameHistory history={groupNameHistory} />

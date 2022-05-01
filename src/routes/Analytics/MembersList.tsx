@@ -37,7 +37,10 @@ export default function MembersList({
         {members.map((member, idx) => (
           <div className="card bg-base-100 shadow-xl" key={idx}>
             <div className="card-body">
-              <h2 className="card-title">{member.name}</h2>
+              <h2 className="card-title">
+                <strong className="badge badge-secondary">{idx + 1}</strong>
+                {member.name}
+              </h2>
               <p>
                 <b>{formatNumber(member.messages)}</b> messages
               </p>
