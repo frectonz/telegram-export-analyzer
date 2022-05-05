@@ -49,7 +49,7 @@ function AnalyticsDisplay({ content }: { content: Content }) {
 
   return (
     <main className="container mx-auto p-2">
-      <section className="my-8 mx-4">
+      <section className="my-6 mx-4">
         <div className="badge badge-secondary uppercase">
           {content.type.replace("_", " ")}
         </div>
@@ -57,42 +57,39 @@ function AnalyticsDisplay({ content }: { content: Content }) {
           Analysis results for <b className="text-primary">{content.name}</b>{" "}
         </h1>
       </section>
-      <section className="py-8">
-        <Routes>
-          <Route
-            path=""
-            element={
-              <>
-                <Link to="/analytics/messages/cats">Messages</Link>
-                <StatBoxes
-                  totalMembers={members.length}
-                  totalMessages={totalMessages}
-                  totalForwardedMessages={forwardedMessages.length}
-                />
-                <MembersList
-                  title="Top 10 Chattiest Members"
-                  members={members.slice(0, 10)}
-                  totalMessages={totalMessages}
-                />
-                <GroupNameHistory history={groupNameHistory} />
-              </>
-            }
-          />
-          <Route
-            path="members"
-            element={
+      <Routes>
+        <Route
+          path=""
+          element={
+            <>
+              <StatBoxes
+                totalMembers={members.length}
+                totalMessages={totalMessages}
+                totalForwardedMessages={forwardedMessages.length}
+              />
               <MembersList
-                title="All Members"
-                members={members}
+                title="Top 10 Chattiest Members"
+                members={members.slice(0, 10)}
                 totalMessages={totalMessages}
               />
-            }
-          />
-          <Route path="messages" element={<Outlet />}>
-            <Route path=":userID" element={<Messages content={content} />} />
-          </Route>
-        </Routes>
-      </section>
+              <GroupNameHistory history={groupNameHistory} />
+            </>
+          }
+        />
+        <Route
+          path="members"
+          element={
+            <MembersList
+              title="All Members"
+              members={members}
+              totalMessages={totalMessages}
+            />
+          }
+        />
+        <Route path="messages" element={<Outlet />}>
+          <Route path=":userID" element={<Messages content={content} />} />
+        </Route>
+      </Routes>
     </main>
   );
 }

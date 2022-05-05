@@ -4,15 +4,38 @@ import { Content, NormalMessage } from "../../store";
 export default function Messages({ content }: { content: Content }) {
   const params = useParams();
 
-  const messages = content.messages.filter((message) => {
-    if (message.type === "message") {
-      if (message.from_id === params.userID) {
-        return true;
+  const messages = (
+    content.messages.filter((message) => {
+      if (message.type === "message") {
+        if (message.from_id === params.userID) {
+          return true;
+        }
       }
-    }
 
-    return false;
-  }) as NormalMessage[];
+      return false;
+    }) as NormalMessage[]
+  )
+    .map((message) => {
+      if (message.text === "") {
+        message.text = "(File not included.)";
+      }
+      return message;
+    })
+    .map((message) => {
+      if (Array.isArray(message.text)) {
+        message.text = message.text
+          .map((text) => {
+            if (typeof text === "object") {
+              return text.text;
+            }
+
+            return text;
+          })
+          .join("");
+      }
+
+      return message;
+    });
 
   const name =
     (messages.length !== 0 && messages[0].from) ||
@@ -22,11 +45,9 @@ export default function Messages({ content }: { content: Content }) {
   return (
     <div className="card bg-base-100 shadow-xl">
       <div className="card-body">
-        <h1 className="card-title text-2xl">
+        <h1 className="my-2 card-title text-2xl">
           Messages from <span className="text-secondary">{name}</span>
         </h1>
-      </div>
-      <div className="card-body">
         <ul>
           {messages.map((message) => (
             <li

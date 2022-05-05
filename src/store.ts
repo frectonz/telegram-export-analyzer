@@ -19,7 +19,7 @@ export interface Content {
 interface Message {
   id: number;
   date: string;
-  text: string;
+  text: string | (string | { type: string; text: string })[];
 }
 
 export interface NormalMessage extends Message {
@@ -109,7 +109,7 @@ export function getMembersWithMessages({
             member.messages++;
           } else {
             acc.push({
-              name: message.from,
+              name: message.from || message.from_id,
               id: message.from_id,
               messages: 1,
             });

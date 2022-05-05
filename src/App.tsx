@@ -44,15 +44,15 @@ function Header() {
   );
 
   return (
-    <header className="navbar bg-base-100">
+    <header className="navbar bg-base-100 sticky top-0 z-50 shadow-lg">
       <div className="navbar-start">
-        <a href="/" className="btn btn-ghost normal-case text-xl">
+        <Link to="/" className="btn btn-ghost normal-case text-xl">
           <img
             title="Telegram Export Analyzer"
             src={favicon}
             className="w-10"
           />
-        </a>
+        </Link>
       </div>
       <div className="navbar-end">
         <button
