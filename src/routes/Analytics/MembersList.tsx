@@ -8,7 +8,7 @@ export default function MembersList({
 }: {
   title: string;
   totalMessages: number;
-  members: { name: string; messages: number }[];
+  members: { id: string; name: string; messages: number }[];
 }) {
   const { pathname } = useLocation();
   const visibility = pathname !== "/analytics" ? "hidden" : "";
@@ -18,7 +18,7 @@ export default function MembersList({
       <div className="card-body flex flex-row justify-between">
         <h2 className="card-title">{title}</h2>
         <Link
-          to="members"
+          to="/analytics/members"
           title="See all members"
           className={`btn btn-secondary btn-ghost ${visibility}`}
         >
@@ -35,22 +35,24 @@ export default function MembersList({
 
       <div className="card-body grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
         {members.map((member, idx) => (
-          <div className="card bg-base-100 shadow-xl" key={idx}>
-            <div className="card-body">
-              <h2 className="card-title">
-                <strong className="badge badge-secondary">{idx + 1}</strong>
-                {member.name}
-              </h2>
-              <p>
-                <b>{formatNumber(member.messages)}</b> messages
-              </p>
-              <progress
-                className="progress progress-primary w-56"
-                value={member.messages}
-                max={totalMessages}
-              />
+          <Link to={`/analytics/messages/${member.id}`} key={member.id}>
+            <div className="card bg-base-100 shadow-xl">
+              <div className="card-body">
+                <h2 className="card-title">
+                  <strong className="badge badge-secondary">{idx + 1}</strong>
+                  {member.name}
+                </h2>
+                <p>
+                  <b>{formatNumber(member.messages)}</b> messages
+                </p>
+                <progress
+                  className="progress progress-primary w-56"
+                  value={member.messages}
+                  max={totalMessages}
+                />
+              </div>
             </div>
-          </div>
+          </Link>
         ))}
       </div>
     </div>

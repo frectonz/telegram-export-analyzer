@@ -22,7 +22,7 @@ interface Message {
   text: string;
 }
 
-interface NormalMessage extends Message {
+export interface NormalMessage extends Message {
   from: string;
   from_id: string;
   type: "message";
@@ -99,35 +99,42 @@ export const { StoreProvider, useDispatch, useStore } = makeStore<
 
 export function getMembersWithMessages({
   messages,
-}: Content): { name: string; messages: number }[] {
-  const membersWithMessages = messages.reduce(
-    (acc: Map<string, number>, message) => {
-      if (message.type == "message") {
-        const messages = acc.get(message.from) || 0;
-        acc.set(message.from || message.from_id, messages + 1);
-      }
-
-      if (message.type === "service") {
-        if (message.action === "remove_members") {
-          message.members.forEach((member) => {
-            acc.delete(member);
-          });
+}: Content): { id: string; name: string; messages: number }[] {
+  const membersWithMessages = messages
+    .reduce(
+      (acc: { name: string; id: string; messages: number }[], message) => {
+        if (message.type == "message") {
+          const member = acc.find(({ id }) => id == message.from_id);
+          if (member) {
+            member.messages++;
+          } else {
+            acc.push({
+              name: message.from,
+              id: message.from_id,
+              messages: 1,
+            });
+          }
         }
-      }
 
-      return acc;
-    },
-    new Map()
-  );
+        if (message.type === "service") {
+          if (message.action === "remove_members") {
+            message.members.forEach((removedMember) => {
+              const member = acc.find(({ name }) => name === removedMember);
 
-  const members = Array.from(membersWithMessages.entries())
-    .map(([name, messages]) => ({
-      name,
-      messages,
-    }))
+              if (member) {
+                acc.splice(acc.indexOf(member), 1);
+              }
+            });
+          }
+        }
+
+        return acc;
+      },
+      []
+    )
     .sort((a, b) => b.messages - a.messages);
 
-  return members;
+  return membersWithMessages;
 }
 
 export function countMessages({ messages }: Content) {

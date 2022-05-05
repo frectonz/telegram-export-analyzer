@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { Route, Routes, useNavigate } from "react-router-dom";
+import { Link, Outlet, Route, Routes, useNavigate } from "react-router-dom";
 import {
   Content,
   useStore,
@@ -12,6 +12,7 @@ import {
 import StatBoxes from "./Analytics/StatsBox";
 import MembersList from "./Analytics/MembersList";
 import GroupNameHistory from "./Analytics/GroupNameHistory";
+import Messages from "./Analytics/Messages";
 
 export default function Analytics() {
   const store = useStore();
@@ -62,6 +63,7 @@ function AnalyticsDisplay({ content }: { content: Content }) {
             path=""
             element={
               <>
+                <Link to="/analytics/messages/cats">Messages</Link>
                 <StatBoxes
                   totalMembers={members.length}
                   totalMessages={totalMessages}
@@ -86,6 +88,9 @@ function AnalyticsDisplay({ content }: { content: Content }) {
               />
             }
           />
+          <Route path="messages" element={<Outlet />}>
+            <Route path=":userID" element={<Messages content={content} />} />
+          </Route>
         </Routes>
       </section>
     </main>
