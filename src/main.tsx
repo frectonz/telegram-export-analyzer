@@ -7,6 +7,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 import Home from "./routes/Home";
 import Analytics from "./routes/Analytics";
+import NotFound from "./routes/NotFound";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
@@ -15,6 +16,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
         <Route path="" element={<App />}>
           <Route path="" element={<Home />} />
           <Route path="analytics/*" element={<Analytics />} />
+          <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>
     </BrowserRouter>

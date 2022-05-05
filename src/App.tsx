@@ -131,7 +131,7 @@ function Footer() {
   );
 }
 
-function ErrorFallback({ error, resetErrorBoundary }: FallbackProps) {
+function ErrorFallback({ resetErrorBoundary }: FallbackProps) {
   return (
     <div className="hero min-h-screen bg-base-200">
       <div className="hero-content text-center">
